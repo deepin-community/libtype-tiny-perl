@@ -1,0 +1,27 @@
+=======================================================================
+   This file contains a high-level summary of changes between recent
+   stable releases of Type-Tiny. For a more detailed list, including
+   changes in development releases, see the "Changes" file instead.
+=======================================================================
+
+2019-12-11 Type-Tiny version 1.008000 released!
+
+ - Type::Tiny has a website. <http://typetiny.toby.ink/>
+ - Resolved all bugs from RT.
+ - Completed everything on TODO.
+ - Rewrite of the manual.
+ - Lots more test cases. (Now almost 14,000 test cases total!)
+ - wrap_methods/wrap_subs in Type::Params.
+
+2020-02-19 Type-Tiny version 1.010000 released!
+
+ - Recursive definition of type constraints.
+
+2020-10-28 Type-Tiny version 1.012000 released!
+
+ - List processing methods (grep, map, etc).
+ - Type::Utils::is() and Type::Utils::assert().
+ - Improvements to Types::TypeTiny.
+ - Type::Params now provides an ArgsObject type.
+ - ArrayLike and HashLike types now parameterizable.
+ - Type::Library -extends and -utils flags.

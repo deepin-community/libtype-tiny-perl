@@ -1,0 +1,223 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Type::Tiny
+Upstream-Contact: http://rt.cpan.org/Dist/Display.html?Queue=Type-Tiny
+Source: https://metacpan.org/release/Type-Tiny
+ https://github.com/tobyink/p5-type-tiny
+
+Files: *
+Copyright: 2012-2014,2017-2021, Toby Inkster <tobyink@cpan.org>
+License-Grant:
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+Comment:
+ Perl 5 is licensed under either the 'Artistic license' or the 'GNU
+ General Public License' version 1 or later.
+
+Files: t/40-regression/rt85911.t
+ t/40-regression/rt86004.t
+ t/40-regression/rt90096-2.t
+ t/40-regression/rt92571-2.t
+ t/40-regression/rt92571.t
+ t/40-regression/rt92591.t
+ t/40-regression/rt94196.t
+Copyright: 2013-2014,2017-2021, Diab Jerius <djerius@cpan.org>
+License-Grant:
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+
+Files: lib/Type/Tiny/_HalfOp.pm
+ t/20-unit/Type-Tiny-_HalfOp/extra-params.t
+ t/20-unit/Type-Tiny-_HalfOp/overload-precedence.t
+ t/40-regression/73f51e2d.pl
+ t/40-regression/73f51e2d.t
+Copyright: 2014,2017-2021, Graham Knop <haarg@cpan.org>
+License-Grant:
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+
+Files: t/20-unit/Types-Common-Numeric/basic.t
+ t/20-unit/Types-Common-String/basic.t
+ t/20-unit/Types-Common-String/coerce.t
+ t/20-unit/Types-Common-String/unicode.t
+Copyright: 2013-2014,2017-2021, Matt S Trout <mst@shadowcatsystems.co.uk>
+License-Grant:
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+
+Files: t/40-regression/rt86233.t
+ t/40-regression/rt86239.t
+Copyright: 2013-2014,2017-2021, Vyacheslav Matyukhin <mmcleric@cpan.org>
+License-Grant:
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+
+Files: t/30-integration/MooseX-Getopt/coercion.t
+Copyright: 2014,2017-2021, Alexander Hartmaier <abraxxa@cpan.org>
+License-Grant:
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+
+Files: t/40-regression/rt133141.t
+Copyright: 2020-2021, Andrew Ruder <andy@aeruder.net>
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+
+Files: t/20-unit/Type-Params/multisig-custom-message.t
+Copyright: 2018-2021, Benct Philip Jonsson <bpjonsson@gmail.com>
+License-Grant:
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+
+Files: t/40-regression/rt98113.t
+Copyright: 2014,2017-2021, Dagfinn Ilmari Mannsåker <ilmari@ilmari.org>
+License-Grant:
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+
+Files: t/30-integration/Class-InsideOut/basic.t
+Copyright:
+  2013-2014,2017-2021, David Golden
+  2013-2014,2017-2021, Toby Inkster <tobyink@cpan.org>
+License-Grant:
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+
+Files: t/99-moose-std-types-test.t
+Copyright: 2013-2014,2017-2021, Infinity Interactive, Inc.
+License-Grant:
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+
+Files: t/40-regression/ttxs-gh1.t
+Copyright: 2014,2017-2021, Jed Lund <jandrew@cpan.org>
+License-Grant:
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+
+Files: t/40-regression/rt125765.t
+Copyright: 2018-2021, KB Jørgensen <kbj@capmon.dk>
+License-Grant:
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+
+Files: t/40-regression/rt125132.t
+Copyright: 2018-2021, Marc Ballarin <marc.ballarin@1und1.de>
+License-Grant:
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+
+Files: t/40-regression/gh1.t
+Copyright: 2013-2014,2017-2021, Richard Simões <rsimoes@cpan.org>
+License-Grant:
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+
+Files: t/40-regression/rt90096.t
+Copyright: 2013-2014,2017-2021, Samuel Kaufman <skaufman@cpan.org>
+License-Grant:
+ This is free software; you can redistribute it and/or modify it under
+ the same terms as the Perl 5 programming language system itself.
+License: Artistic or GPL-1+
+
+Files: inc/archaic/Test/Builder.pm
+Copyright:
+  2002-2008, chromatic <chromatic@wgz.org>
+  2002-2008, Michael G Schwern <schwern@pobox.com>
+License-Grant:
+ This program is free software; you can redistribute it and/or
+ modify it under the same terms as Perl itself.
+License: Artistic or GPL-1+
+Comment:
+ Mangled convenience copy of Test::Builder.
+
+Files: inc/archaic/Test/Builder/IO/Scalar.pm
+Copyright:
+  1996, Eryq <eryq@zeegee.com>
+  1999,2001, ZeeGee Software Inc <http://www.zeegee.com>
+License-Grant:
+ This program is free software; you can redistribute it and/or
+ modify it under the same terms as Perl itself.
+License: Artistic or GPL-1+
+Comment:
+ Mangled convenience copy of Test::Builder::IO::Scalar.
+
+Files: inc/archaic/Test/Builder/Tester.pm
+Copyright:
+  2001, Michael G Schwern <schwern@pobox.com>
+  2002,2004, Mark Fowler <mark@twoshortplanks.com>
+License-Grant:
+ This program is free software; you can redistribute it
+ and/or modify it under the same terms as Perl itself.
+License: Artistic or GPL-1+
+Comment:
+ Mangled convenience copy of Test::Builder::Tester.
+
+Files: inc/archaic/Test/Builder/Tester/Color.pm
+Copyright: 2002, Mark Fowler <mark@twoshortplanks.com>
+License-Grant:
+ This program is free software; you can redistribute it
+ and/or modify it under the same terms as Perl itself.
+License: Artistic or GPL-1+
+Comment:
+ Mangled convenience copy of Test::Builder::Tester::Color.
+
+Files: inc/archaic/Test/More.pm
+ inc/archaic/Test/Simple.pm
+Copyright: 2001-2008, Michael G Schwern <schwern@pobox.com>
+License-Grant:
+ This program is free software; you can redistribute it and/or
+ modify it under the same terms as Perl itself.
+License: Artistic or GPL-1+
+Comment:
+ Mangled convenience copy of Test::More.
+
+Files: inc/Test/Fatal.pm
+Copyright: 2013, Ricardo Signes
+License: Artistic or GPL-1+
+Comment:
+ Mangled convenience copy of Test::Fatal.
+
+Files: inc/Test/Requires.pm
+Copyright: 2013, MATSUNO Tokuhiro
+License: Artistic or GPL-1+
+Comment:
+ Mangled convenience copy of Test::Requires.
+
+Files: inc/Try/Tiny.pm
+Copyright: Yuval Kogman
+License: Artistic or GPL-1+
+Comment:
+ Mangled convenience copy of Try::Tiny.
+
+Files: debian/*
+Copyright: 2013-2017,2019-2021, Jonas Smedegaard <dr@jones.dk>
+License-Grant:
+ This program is free software; you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by the
+ Free Software Foundation; either version 3, or (at your option) any
+ later version.
+License: GPL-3+
+
+License: Artistic
+License-Reference: /usr/share/common-licenses/Artistic
+
+License: GPL-1+
+License-Reference: /usr/share/common-licenses/GPL-1
+
+License: GPL-3+
+License-Reference: /usr/share/common-licenses/GPL-3

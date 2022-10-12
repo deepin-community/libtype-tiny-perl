@@ -1,0 +1,546 @@
+libtype-tiny-perl (1.012004-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release(s)
+
+  [ Jonas Smedegaard ]
+  * declare compliance with Debian Policy 4.6.0
+
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 31 Aug 2021 16:14:55 +0200
+
+libtype-tiny-perl (1.012002-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new bugfix release
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sat, 08 May 2021 13:23:30 +0200
+
+libtype-tiny-perl (1.012001-2) unstable; urgency=medium
+
+  * stop build-depend on libkavorka-perl libmoops-perl,
+    used only optionally in testsuite
+    and depending on deprecated libparse-keyword-perl
+
+ -- Jonas Smedegaard <dr@jones.dk>  Wed, 24 Feb 2021 20:54:03 +0100
+
+libtype-tiny-perl (1.012001-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Debian Janitor ]
+  * Use secure URI in Homepage field.
+
+  [ Jonas Smedegaard ]
+  * copyright info: update coverage
+  * use debhelper compatibility level 13 (not 12)
+  * declare compliance with Debian Policy 4.5.1
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 07 Feb 2021 02:44:41 +0100
+
+libtype-tiny-perl (1.012000-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream version 1.012000
+  * Updating debian/copyright_hints.
+
+ -- Andrius Merkys <merkys@debian.org>  Tue, 03 Nov 2020 00:42:05 -0500
+
+libtype-tiny-perl (1.010006-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream version 1.010006
+
+ -- Andrius Merkys <merkys@debian.org>  Thu, 10 Sep 2020 02:20:04 -0400
+
+libtype-tiny-perl (1.010005-1) unstable; urgency=medium
+
+  [ Andrius Merkys ]
+  * Team upload.
+  * New upstream version 1.010005
+
+  [ Jonas Smedegaard ]
+  * copyright: update coverage
+  * simplify source script copyright-chceck
+
+ -- Andrius Merkys <merkys@debian.org>  Fri, 28 Aug 2020 02:23:20 -0400
+
+libtype-tiny-perl (1.010004-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream version 1.010004
+
+ -- Andrius Merkys <merkys@debian.org>  Wed, 19 Aug 2020 01:44:05 -0400
+
+libtype-tiny-perl (1.010002-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream version 1.010002
+
+ -- Andrius Merkys <merkys@debian.org>  Tue, 16 Jun 2020 01:40:45 -0400
+
+libtype-tiny-perl (1.010001-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release(s)
+
+  [ Jonas Smedegaard ]
+  * build-depend on libtype-tie-perl,
+    to improve test coverage
+  * declare compliance with Debian Policy 4.5.0
+  * watch: add usage comment
+  * copyright: update coverage
+
+ -- Jonas Smedegaard <dr@jones.dk>  Wed, 01 Apr 2020 20:16:30 +0200
+
+libtype-tiny-perl (1.008001-2) unstable; urgency=medium
+
+  [ intrigeri ]
+  * remove myself from Uploaders
+
+  [ Debian Janitor ]
+  * remove obsolete fields Contact, Name from debian/upstream/metadata
+    (already present in machine-readable debian/copyright)
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sat, 28 Dec 2019 19:00:50 +0100
+
+libtype-tiny-perl (1.008001-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sat, 28 Dec 2019 18:54:54 +0100
+
+libtype-tiny-perl (1.008000-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release(s)
+
+  [ Jonas Smedegaard ]
+  * fix revive packaging lost in port to short-form dh
+    (regression since 1.002002-1):
+    + re-add copyright hints
+    + revive TODO notes
+    + fix stop explicitly build-depend on libtest-simple-perl
+      (explanatory comment lost in port to short-form dh,
+      later suboptimally optimized)
+  * re-declare enhancing libdata-validator-perl
+    libregexp-util-perl libtype-tie-perl
+    (harmless even though not in Debian)
+  * copyright: (revert major rewrite and only) extend coverage
+  * update homepage
+  * check more of testsuite;
+    + build-depend on libdevel-lexalias-perl libio-string-perl
+      libkavorka-perl libmoops-perl libreturn-type-perl
+      libtypes-path-tiny-perl libspecio-perl
+  * update TODO: list modules optionally needed for testsuite
+  * stop (custom-)install files CONTRIBUTING TODO
+    (CONTRIBUTING now integrated with library, and TODO is gone)
+  * fix stop explicitly recommend libscalar-list-utils-perl
+    (wrongly optimized since 1.004004-1)
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 13 Dec 2019 18:35:24 +0100
+
+libtype-tiny-perl (1.006000-1) unstable; urgency=medium
+
+  [ Jonas Smedegaard ]
+  * Simplify rules: Avoid resolving explicit package name or staging dir.
+
+  [ intrigeri ]
+  * New upstream release.
+  * Sync debian/copyright with upstream COPYRIGHT.
+  * Annotate with <!nocheck> test-only dependencies.
+  * Update build and runtime dependencies.
+  * Bump debhelper compat level to 12 and switch to debhelper-compat.
+  * Stop versioning dependencies satisfied in oldstable (Stretch)
+  * Declare compliance with policy 4.4.1
+  * Declare Rules-Requires-Root: no
+
+ -- intrigeri <intrigeri@debian.org>  Mon, 09 Dec 2019 10:19:23 +0000
+
+libtype-tiny-perl (1.004004-1) unstable; urgency=medium
+
+  * Team upload.
+  * Import upstream version 1.004004.
+  * Sync debian/copyright with upstream COPYRIGHT.
+  * Update build and runtime dependencies.
+  * Declare compliance with Debian Policy 4.3.0.
+
+ -- gregor herrmann <gregoa@debian.org>  Fri, 11 Jan 2019 20:46:19 +0100
+
+libtype-tiny-perl (1.004002-1) unstable; urgency=medium
+
+  * Team upload.
+
+  [ intrigeri ]
+  * Remove obsolete README.source.
+
+  [ gregor herrmann ]
+  * Import upstream version 1.004002
+  * Don't install upstream README.
+    Just a text version of the POD/manpage.
+  * Update build dependencies, and split Build-Depends{,-Indep}.
+  * Sync debian/copyright with upstream COPYRIGHT.
+  * Install new CONTRIBUTING.pod.
+
+ -- gregor herrmann <gregoa@debian.org>  Wed, 01 Aug 2018 16:30:21 +0200
+
+libtype-tiny-perl (1.002002-1) unstable; urgency=medium
+
+  [ Salvatore Bonaccorso ]
+  * Update Vcs-* headers for switch to salsa.debian.org
+
+  [ gregor herrmann ]
+  * debian/*: update URLs from {search,www}.cpan.org to MetaCPAN.
+
+  [ intrigeri ]
+  * Import new upstream release.
+  * Port to dh.
+  * Bump dh compat level to 11, bump versioned build-dependency accordingly.
+  * Declare compatibility with Policy 4.1.5.
+  * Add myself to uploaders.
+  * Enable autopkgtests.
+  * Reformat debian/control and drop obsoleted versions on dependencies.
+  * Reformat debian/copyright with cme.
+  * Drop packages that are not in the archive from the Enhances control field.
+  * debian/copyright: drop paragraph about non-existing file.
+  * Add build-dependency on libtest-requires-perl.
+  * Add debian/upstream/metadata.
+  * Update debian/copyright.
+  * Mention Types::Standard and Type::Params in the package description.
+
+ -- intrigeri <intrigeri@debian.org>  Wed, 25 Jul 2018 15:52:19 +0000
+
+libtype-tiny-perl (1.002001-1) unstable; urgency=medium
+
+  [ upstream ]
+  * New release(s).
+    News:
+    + Type::Params now has compile_named and validate_named.
+    + Type::Tiny's constraint parameter may be a string of code.
+    + Types::Standard::CycleTuple added.
+    + Types::Standard::RegexpRef now accepts blessed objects where
+      $object->isa('Regexp'). This plays better with re::engine::*
+      pragmas.
+    + Fixed bug where Types::Standard::Int would *sometimes* accept
+      an overloaded object. (It never should.)
+    + Various performance enhancements and bug fixes.
+
+  [ Jonas Smedegaard ]
+  * Update watch file: Use substitution strings.
+  * Modernize cdbs:
+    + Drop upstream-tarball hints: Use gbp import-orig --uscan.
+    + Do copyright-check in maintainer script (not during build).
+    + Stop build-depend on licensecheck.
+  * Update copyright info: Use https protocol in file format URL.
+  * Declare compliance with Debian Policy 4.1.0.
+  * Tighten lintian overrides regarding License-Reference.
+  * Update package relations:
+    + Recommend recent perl or recent libscalar-list-utils-perl (not
+      libsub-name-perl).
+    + Recommend libref-util-perl.
+    + Build-depend on and enhance libfunction-parameters-perl.
+    + Relax to build-depend unversioned on libvalidation-class-perl
+      libmoo-perl: Needed version satisfied even in oldstable.
+    + Stop build-depend explicitly on (recent perl or)
+      libtest-simple-perl, or (recent perl or) libjson-pp-perl: Needed
+      perl version satisfied even in oldstable.
+    + Relax build-dependency on libobject-accessor-perl to drop fallback
+      on older perl: Package available even in oldstable.
+    + Relax to suggest (not recommend) libdevel-lexalias-perl.
+    + Enhance perl (for Params::Check) libmoo-perl libmoose-perl
+      libmouse-perl libregexp-util-perl
+      libparams-validationcompiler-perl libdata-validator-perl.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Thu, 14 Sep 2017 12:33:29 +0200
+
+libtype-tiny-perl (1.000006-1) unstable; urgency=medium
+
+  [ upstream ]
+  * New release.
+    + Fix escaping within q{...} in a test case.
+
+  [ gregor herrmann ]
+  * Update Test::Tester build dependency.
+
+  [ Jonas Smedegaard ]
+  * Update watch file:
+    + Bump to version 4.
+    + Track only MetaCPAN URL.
+    + Mention gbp import-orig --uscan in usage comment.
+    + Tighten version regex.
+  * Update git-buildpage config:
+    + Avoid git- prefix.
+    + Filter any .git* file.
+  * Modernize Vcs-* fields:
+    + Use https protocol.
+    + Use git subdir (not cgit).
+    + Add .git suffix for Vcs-Git URL.
+  * Declare compliance with Debian Policy 3.9.8.
+  * Bump debhelper compatibility level to 9.
+  * Update copyright info:
+    + Use License-Grant and License-Reference fields.
+      Thanks to Ben Finney.
+    + Extend coverage of Debian packaging.
+    + Extend coverage for upstream authors.
+  * Add lintian override regarding license in License-Reference field.
+    See bug#786450.
+  * Update package relations:
+    + Favor recent perl over (recent libtest-simple-perl over)
+      libtest-tester-perl.
+    + Build-depend on licensecheck (not devscripts).
+
+ -- Jonas Smedegaard <dr@jones.dk>  Wed, 01 Feb 2017 02:50:18 +0100
+
+libtype-tiny-perl (1.000005-1) unstable; urgency=medium
+
+  [ upstream ]
+  New release.
+    + Fix short-circuiting optimizations for parameterized HashRef,
+      ArrayRef, ScalarRef, and Map type constraints.
+    + Fix annoying warning message in test suite with recent versions of
+      Exporter::Tiny.
+
+  [ Jonas Smedegaard ]
+  * Extend build-dependency on libobject-accessor-perl to fallback on
+    older perl: Eases backporting.
+  * Declare compliance with Debian Policy 3.9.6.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 15 Feb 2015 16:06:50 +0100
+
+libtype-tiny-perl (1.000004-1) unstable; urgency=medium
+
+  [ upstream ]
+  New release(s).
+    + Fix for coercions to parameterized Dict including a mixture of
+      inlineable and non-inlineable optional values.
+    + Fix for Type::Registry::DWIM.
+    + Fix issues with coercions and native attribute traits with some
+      oldish versions of Moose on oldish versions of Perl.
+
+  [ Jonas Smedegaard ]
+  Update package relations: Recommend libtype-tiny-xs-perl.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 12 Sep 2014 20:37:23 +0200
+
+libtype-tiny-perl (1.000002-1) unstable; urgency=medium
+
+  [ upstream ]
+  New release(s).
+    + Support for Type::Tiny::XS.
+    + Test case improvements.
+    + Saner implementations of slurpy and Optional within Tuples and
+      Dicts.
+    + More aggressive at freezing coercions.
+    + Better behaviour of non-frozen coercions.
+      (For example, they are no longer considered to be inlineable.)
+    + Better integration between Type::Library and Type::Registry.
+
+  [ Salvatore Bonaccorso ]
+  * Update Vcs-Browser URL to cgit web frontend
+
+  [ Jonas Smedegaard ]
+  * Update copyright info: Add more testsuite authors.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 26 Aug 2014 22:17:38 +0200
+
+libtype-tiny-perl (0.044-1) unstable; urgency=medium
+
+  [ upstream ]
+  * New release.
+    + Lots of bugfixes, tests, and documentation improvements.
+
+  [ Jonas Smedegaard ]
+  * Update copyright info:
+    + Adjust comment for CONTRIBUTING Files section.
+    + Extend packaging to cover recent year.
+    + Bump (yes, not extend) coverage of convenience code copy of
+      Try::Tiny.
+    + Fix update coverage of testsuite.
+  * Update watch file to include metacpan.org URL (replacing
+    search.cpan.org URL), in addition to www.cpan.org URL.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 09 Jun 2014 22:56:52 +0200
+
+libtype-tiny-perl (0.042-2) unstable; urgency=medium
+
+  * Update copyright info:
+    + Fix cover CONTRIBUTING file.
+      Thanks to Thorsten Alteholz.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 30 May 2014 19:35:56 +0200
+
+libtype-tiny-perl (0.042-1) unstable; urgency=medium
+
+  [ Jonas Smedegaard ]
+  * Bump standards-version to 3.9.5.
+  * Update package relations:
+    + Fix build-depend explicitly on perl.
+    + (Build-)depend on libexporter-tiny-perl.
+    + Build-depend on libtest-tester-perl.
+    + Recommend libsub-name-perl.
+  * Update copyright info:
+    + Extend copyright coverage for main upstream author.
+    + Add copyright coverage for testsuite contributors.
+    + Drop copyright coverage for no longer included convenience code
+      copies.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 06 May 2014 04:14:49 +0200
+
+libtype-tiny-perl (0.022-1) unstable; urgency=low
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Improve watch file to use both www.cpan.org/authors URL (for newest
+    info) and search.cpan.org/dist URL (for change of author).
+  * Suggest (not only build-depend on) libdevel-stacktrace-perl.
+  * Recommend libdevel-lexalias-perl.
+  * Enhance libtype-tie-perl and libreply-perl.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 09 Aug 2013 23:05:00 +0200
+
+libtype-tiny-perl (0.020-1) unstable; urgency=low
+
+  [ upstream ]
+  * New release.
+    Highlights:
+    + Support for Perl 5.6.x.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 29 Jul 2013 14:48:53 +0200
+
+libtype-tiny-perl (0.016-1) unstable; urgency=low
+
+  [ upstream ]
+  * New release.
+    + Type::Utils::dwim_type() function.
+    + Experimental support for Perl 5.6.x.
+
+  [ Jonas Smedegaard ]
+  * Switch to cpan.org/authors URL for watch file and get-orig-source
+    target, and simplify watch file.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Thu, 18 Jul 2013 18:42:02 +0200
+
+libtype-tiny-perl (0.014-1) unstable; urgency=low
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Build-depend on libtest-fatal-perl: Needed for testsuite.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 30 Jun 2013 16:39:19 +0200
+
+libtype-tiny-perl (0.012-1) unstable; urgency=low
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Update package relations:
+    + Fix tighten to build-depend versioned on libvalidation-class-perl:
+      Newer version needed in testsuite since 0.005~05.
+    + Fix build-depend on (recent perl or) recent libjson-pp-perl (not
+      libjson-perl): Needed fot testsuite since 0.005~08.
+    + Build-depend on libdevel-stacktrace-perl, libmoosex-types-perl and
+      libmousex-types-perl (and mention in comment
+      Sub::Exporter::Lexical and Function::Parameters not yet in
+      Debian): Optionally needed for testsuite.
+  * Update copyright file: Add Files sections for new authors of
+    regression tests (no new licensing).
+  * Install examples.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 30 Jun 2013 16:26:36 +0200
+
+libtype-tiny-perl (0.006-1) unstable; urgency=low
+
+  [ upstream ]
+  * New release.
+    + String error messages replaced with exceptions.
+      - Assertion exceptions have an ->explain method.
+    + Bytes, Chars, Encode and Decode split from Types::Standard to
+      Types::Encodings.
+
+  [ Jonas Smedegaard ]
+  * Update upstream source to use github.
+  * Stop tracking md5sum of upstream tarball.
+  * Extend copyright coverage for additional convenience code copies.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 14 Jun 2013 21:08:14 +0200
+
+libtype-tiny-perl (0.004-1) unstable; urgency=low
+
+  [ upstream ]
+  * New release.
+
+  [ Jonas Smedegaard ]
+  * Add Files section for differently owned upstream file (no new
+    license).
+  * Update package relations:
+    + Build-depend on (recent perl or) recent libtest-simple-perl:
+      Required by testsuite.
+    + Tighten to build-depend versioned on libmoo-perl: Match version
+      mentioned in Type::Tiny::Manual::UsingWithMoo.
+    + Build-depend on libclass-insideout-perl and
+      libvalidation-class-perl: Optionally used in testsuite.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 06 May 2013 16:13:58 +0200
+
+libtype-tiny-perl (0.002-1) unstable; urgency=low
+
+  [ upstream ]
+  * Initial stable release.
+    + Chars and Bytes types added to Types::Standard.
+    + Fix method conflicts when exporting type constraints to roles.
+    + Prevent warnings (about 'my $val' masking a previously declared
+      variable) when several Str checks are being inlined in close
+      proximity, such as Tuple[Str,Str].
+    + Link from Test::TypeTiny to Test::Deep::Type.
+    + Avoid unnecessarily regenerating parameterized type constraints.
+    + Make Type::Tiny's has_coercion method more DWIM.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 28 Apr 2013 18:38:22 +0200
+
+libtype-tiny-perl (0.001-1) unstable; urgency=low
+
+  [ upstream ]
+  * Initial stable release.
+    + More test cases for Optional[`a] within Dict[`a].
+    + Some inline code assumed that it would be compiled in a package
+      that had 'blessed' imported.
+    + Some inline code wasn't wrapped in parentheses.
+    + Improve test names generated by Test::TypeTiny; allow test scripts
+      to provide test names.
+    + Parameterized type constraints in Types::Standard now do some
+      sanity checking on their arguments.
+    + Weaken the reference from a Moose::Meta::TypeConstraint object to
+      its Type::Tiny origin.
+
+  [ Jonas Smedegaard ]
+  * Fix stop build-depend on libtest-simple-perl: Provided by perl.
+  * Add README.source emphasizing control.in file as *not* a
+    show-stopper for contributions, referring to wiki page for details.
+  * Stop track or support import of upstream development releases.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 19 Apr 2013 11:40:51 +0200
+
+libtype-tiny-perl (0.000~12-1) unstable; urgency=low
+
+  [ upstream ]
+  * New prerelease.
+    + Fix incorrect Test::Requires line in 'mouse-coercion.t'.
+    + Improvements to has_coercion_for_{type,value} from Type::Coercion.
+    + Fix prototype for Type::Utils::as.
+    + No longer need to pass '-moose' parameter when importing a library
+      into a Moose class; only Mouse needs that treatment now.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 12 Apr 2013 21:55:31 +0200
+
+libtype-tiny-perl (0.000~09-1) unstable; urgency=low
+
+  * Initial packaging release.
+    Closes: bug#705006.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 08 Apr 2013 22:01:21 +0200

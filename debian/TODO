@@ -1,0 +1,8 @@
+  * Check more of testsuite when needed Perl modules are in Debian:
+    + Data::Validator
+    + MooseX::Types::DBIx::Class
+    + MouseX::Types::Common
+    + Regexp::Util
+    + Sub::Exporter::Lexical
+    + Switcheroo
+    + Types::ReadOnly
