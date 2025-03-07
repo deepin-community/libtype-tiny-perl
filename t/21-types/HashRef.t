@@ -12,7 +12,7 @@ Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
 
 =head1 COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2019-2021 by Toby Inkster.
+This software is copyright (c) 2019-2023 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
@@ -37,6 +37,8 @@ ok(HashRef->can_be_inlined, 'HashRef can be inlined');
 is(exception { HashRef->inline_check(q/$xyz/) }, undef, "Inlining HashRef doesn't throw an exception");
 ok(!HashRef->has_coercion, "HashRef doesn't have a coercion");
 ok(HashRef->is_parameterizable, "HashRef is parameterizable");
+isnt(HashRef->type_default, undef, "HashRef has a type_default");
+is_deeply(HashRef->type_default->(), {}, "HashRef type_default is {}");
 
 #
 # The @tests array is a list of triples:
@@ -97,6 +99,8 @@ my @tests = (
 	fail => 'object overloading arrayref' => do { package Local::OL::Array; use overload q[@{}] => sub { $_[0]{array} }; bless {array=>[]} },
 	fail => 'object overloading hashref' => do { package Local::OL::Hash; use overload q[%{}] => sub { $_[0][0] }; bless [{}] },
 	fail => 'object overloading coderef' => do { package Local::OL::Code; use overload q[&{}] => sub { $_[0][0] }; bless [sub { 1 }] },
+	fail => 'object booling to false'  => do { package Local::OL::BoolFalse; use overload q[bool] => sub { 0 }; bless [] },
+	fail => 'object booling to true'   => do { package Local::OL::BoolTrue;  use overload q[bool] => sub { 1 }; bless [] },
 #TESTS
 );
 
@@ -129,6 +133,8 @@ ok($HashOfInts->can_be_inlined, '$HashOfInts can be inlined');
 is(exception { $HashOfInts->inline_check(q/$xyz/) }, undef, "Inlining \$HashOfInts doesn't throw an exception");
 ok(!$HashOfInts->has_coercion, "\$HashOfInts doesn't have a coercion");
 ok(!$HashOfInts->is_parameterizable, "\$HashOfInts is not parameterizable");
+isnt($HashOfInts->type_default, undef, "\$HashOfInts has a type_default");
+is_deeply($HashOfInts->type_default->(), {}, "\$HashOfInts type_default is {}");
 ok_subtype(HashRef, $HashOfInts);
 
 should_fail( 1,               $HashOfInts );
@@ -238,6 +244,82 @@ do {
 #	my $e = exception { HashRef[HashRef, HashRef] };
 #	isnt($e, undef);
 #};
+
+
+#
+# Tied hashes, and combining them with hash-overloaded objects
+#
+
+{
+	package MaiTai::Hash;
+	use Tie::Hash;
+	our @ISA = 'Tie::Hash';
+	sub TIEHASH   { bless [ {} ], $_[0]; }
+	sub FETCH     { $_[0][0]{$_[1]}; }
+	sub STORE     { $_[0][0]{$_[1]} = $_[2]; }
+	sub FIRSTKEY  { my $a = scalar keys %{$_[0][0]}; each %{$_[0][0]} }
+	sub NEXTKEY   { each %{$_[0][0]} }
+	sub EXISTS    { exists $_[0][0]{$_[1]}; }
+	sub DELETE    { delete $_[0][0]{$_[1]}; }
+	sub CLEAR     { %{$_[0][0]} = () }
+	sub SCALAR    { scalar %{$_[0][0]} }
+	##
+	package MaiObj::Hash;
+	use overload '%{}' => sub {
+		my $obj = shift;
+		my %h;
+		tie( %h, 'MaiTai::Hash' ) if $obj->[0];
+		my @keys   = @{ $obj->[1] };
+		my @values = @{ $obj->[2] };
+		@h{ @keys } = @values;
+		return \%h;
+	};
+	sub new {
+		my ( $class, $do_tie ) = ( shift, shift );
+		my ( @keys, @values );
+		while ( @_ ) {
+			push @keys, shift;
+			push @values, shift;
+		}
+		bless [ $do_tie, \@keys, \@values ], $class;
+	}
+}
+
+{
+	my %h;
+	tie( %h, 'MaiTai::Hash' );
+	$h{foo} = 12;
+	$h{bar} = 34;
+	should_pass( \%h, $HashOfInts, 'tied hash that should pass' );
+}
+
+{
+	my %h;
+	tie( %h, 'MaiTai::Hash' );
+	$h{foo} = 12;
+	$h{bar} = 'xxx';
+	should_fail( \%h, $HashOfInts, 'tied hash that should fail' );
+}
+
+{
+	my $obj = 'MaiObj::Hash'->new( !!0, foo => 12, bar => 34 );
+	should_fail( $obj, $HashOfInts, 'overloaded object yielding regular hash that would pass if it weren\'t for the interleving overloaded object' );
+}
+
+{
+	my $obj = 'MaiObj::Hash'->new( !!0, foo => 12, bar => 'xyz' );
+	should_fail( $obj, $HashOfInts, 'overloaded object yielding regular hash that should fail' );
+}
+
+{
+	my $obj = 'MaiObj::Hash'->new( !!1, foo => 12, bar => 34 );
+	should_fail( $obj, $HashOfInts, 'overloaded object yielding tied hash that would pass if it weren\'t for the interleving overloaded object' );
+}
+
+{
+	my $obj = 'MaiObj::Hash'->new( !!1, foo => 12, bar => 'xyz' );
+	should_fail( $obj, $HashOfInts, 'overloaded object yielding tied hash that should fail' );
+}
 
 done_testing;
 

@@ -12,7 +12,7 @@ Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
 
 =head1 COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2019-2021 by Toby Inkster.
+This software is copyright (c) 2019-2023 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
@@ -37,6 +37,8 @@ ok(ArrayLike->can_be_inlined, 'ArrayLike can be inlined');
 is(exception { ArrayLike->inline_check(q/$xyz/) }, undef, "Inlining ArrayLike doesn't throw an exception");
 ok(!ArrayLike->has_coercion, "ArrayLike doesn't have a coercion");
 ok(ArrayLike->is_parameterizable, "ArrayLike is parameterizable");
+isnt(ArrayLike->type_default, undef, "ArrayLike has a type_default");
+is_deeply(ArrayLike->type_default->(), [], "ArrayLike type_default is []");
 
 #
 # The @tests array is a list of triples:
@@ -97,6 +99,8 @@ my @tests = (
 	pass => 'object overloading arrayref' => do { package Local::OL::Array; use overload q[@{}] => sub { $_[0]{array} }; bless {array=>[]} },
 	fail => 'object overloading hashref' => do { package Local::OL::Hash; use overload q[%{}] => sub { $_[0][0] }; bless [{}] },
 	fail => 'object overloading coderef' => do { package Local::OL::Code; use overload q[&{}] => sub { $_[0][0] }; bless [sub { 1 }] },
+	fail => 'object booling to false'  => do { package Local::OL::BoolFalse; use overload q[bool] => sub { 0 }; bless [] },
+	fail => 'object booling to true'   => do { package Local::OL::BoolTrue;  use overload q[bool] => sub { 1 }; bless [] },
 #TESTS
 );
 
@@ -176,5 +180,64 @@ ok(
 	Scalar::Util::blessed( $ArrayOfRounded->coerce(bless({ array=>[1.1,undef,3] }, 'Local::OL::Array')) ),
 );
 
-done_testing;
+#
+# Tied arrays, and combining them with array-overloaded objects
+#
 
+{
+	package MaiTai::Array;
+	use Tie::Array;
+	our @ISA = 'Tie::Array';
+	sub TIEARRAY  { bless { data => [] }, $_[0]; }
+	sub FETCH     { $_[0]{data}[$_[1]]; }
+	sub FETCHSIZE { scalar @{ $_[0]{data} } }
+	sub STORE     { $_[0]{data}[$_[1]] = $_[2]; }
+	sub STORESIZE { $#{ $_[0]{data} } = $_[1]-1; }
+	sub EXISTS    { exists $_[0]{data}[$_[1]]; }
+	sub DELETE    { delete $_[0]{data}[$_[1]]; }
+	##
+	package MaiObj::Array;
+	use overload '@{}' => sub {
+		my $obj = shift;
+		my @arr;
+		tie( @arr, 'MaiTai::Array' ) if $obj->{do_tie};
+		push @arr, @{ $obj->{items} };
+		return \@arr;
+	};
+	sub new {
+		my ( $class, $do_tie ) = ( shift, shift );
+		bless { do_tie => $do_tie, items => [ @_ ] }, $class;
+	}
+}
+
+{
+	my @arr; tie( @arr, 'MaiTai::Array' ); @arr = ( 1..10 );
+	should_pass( \@arr, $ArrayOfInt, 'tied array that should pass' );
+}
+
+{
+	my @arr; tie( @arr, 'MaiTai::Array' ); @arr = ( 'foo', 1 .. 10 );
+	should_fail( \@arr, $ArrayOfInt, 'tied array that should fail' );
+}
+
+{
+	my $obj = 'MaiObj::Array'->new( !!0, 1 .. 10 );
+	should_pass( $obj, $ArrayOfInt, 'overloaded object yielding regular array that should pass' );
+}
+
+{
+	my $obj = 'MaiObj::Array'->new( !!0, 'foo', 1 .. 10 );
+	should_fail( $obj, $ArrayOfInt, 'overloaded object yielding regular array that should fail' );
+}
+
+{
+	my $obj = 'MaiObj::Array'->new( !!1, 1 .. 10 );
+	should_pass( $obj, $ArrayOfInt, 'overloaded object yielding tied array that should pass' );
+}
+
+{
+	my $obj = 'MaiObj::Array'->new( !!1, 'foo', 1 .. 10 );
+	should_fail( $obj, $ArrayOfInt, 'overloaded object yielding tied array that should fail' );
+}
+
+done_testing;

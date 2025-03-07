@@ -12,7 +12,7 @@ Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
 
 =head1 COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2019-2021 by Toby Inkster.
+This software is copyright (c) 2019-2023 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
@@ -37,6 +37,8 @@ ok(NumRange->can_be_inlined, 'NumRange can be inlined');
 is(exception { NumRange->inline_check(q/$xyz/) }, undef, "Inlining NumRange doesn't throw an exception");
 ok(!NumRange->has_coercion, "NumRange doesn't have a coercion");
 ok(NumRange->is_parameterizable, "NumRange is parameterizable");
+isnt(NumRange->type_default, undef, "NumRange has a type_default");
+is(NumRange->type_default->(), 0, "NumRange type_default is zero");
 
 #
 # The @tests array is a list of triples:
@@ -97,6 +99,8 @@ my @tests = (
 	fail => 'object overloading arrayref' => do { package Local::OL::Array; use overload q[@{}] => sub { $_[0]{array} }; bless {array=>[]} },
 	fail => 'object overloading hashref' => do { package Local::OL::Hash; use overload q[%{}] => sub { $_[0][0] }; bless [{}] },
 	fail => 'object overloading coderef' => do { package Local::OL::Code; use overload q[&{}] => sub { $_[0][0] }; bless [sub { 1 }] },
+	fail => 'object booling to false'  => do { package Local::OL::BoolFalse; use overload q[bool] => sub { 0 }; bless [] },
+	fail => 'object booling to true'   => do { package Local::OL::BoolTrue;  use overload q[bool] => sub { 1 }; bless [] },
 #TESTS
 );
 
@@ -133,6 +137,8 @@ should_pass( 5, $NumRange_2);
 should_pass( 6, $NumRange_2);
 should_pass(3.1416, $NumRange_2);
 should_fail([], $NumRange_2);
+
+is($NumRange_2->type_default, undef, "$NumRange_2 has no type_default");
 
 #
 # If there's two parameters, they are inclusive minimum and maximum.
