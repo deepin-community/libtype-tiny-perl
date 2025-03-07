@@ -12,7 +12,7 @@ Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
 
 =head1 COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2019-2021 by Toby Inkster.
+This software is copyright (c) 2019-2023 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
@@ -37,6 +37,8 @@ ok(Dict->can_be_inlined, 'Dict can be inlined');
 is(exception { Dict->inline_check(q/$xyz/) }, undef, "Inlining Dict doesn't throw an exception");
 ok(!Dict->has_coercion, "Dict doesn't have a coercion");
 ok(Dict->is_parameterizable, "Dict is parameterizable");
+isnt(Dict->type_default, undef, "Dict has a type_default");
+is_deeply(Dict->type_default->(), {}, "Dict type_default is {}");
 
 #
 # The @tests array is a list of triples:
@@ -97,6 +99,8 @@ my @tests = (
 	fail => 'object overloading arrayref' => do { package Local::OL::Array; use overload q[@{}] => sub { $_[0]{array} }; bless {array=>[]} },
 	fail => 'object overloading hashref' => do { package Local::OL::Hash; use overload q[%{}] => sub { $_[0][0] }; bless [{}] },
 	fail => 'object overloading coderef' => do { package Local::OL::Code; use overload q[&{}] => sub { $_[0][0] }; bless [sub { 1 }] },
+	fail => 'object booling to false'  => do { package Local::OL::BoolFalse; use overload q[bool] => sub { 0 }; bless [] },
+	fail => 'object booling to true'   => do { package Local::OL::BoolTrue;  use overload q[bool] => sub { 1 }; bless [] },
 #TESTS
 );
 
@@ -139,6 +143,8 @@ ok( !$type1->my_hashref_allows_key('baz'), '!my_hashref_allows_key("baz")' );
 ok(  $type1->my_hashref_allows_value('bar', qr//),  'my_hashref_allows_value("bar", qr//)' );
 ok( !$type1->my_hashref_allows_value('bar', 1234), '!my_hashref_allows_value("bar", 1234)' );
 
+is($type1->type_default, undef, "$type1 has no type_default");
+
 
 #
 # Optional parameterized example
@@ -168,15 +174,15 @@ ok( !$type2->my_hashref_allows_value('bar', 1234), '!my_hashref_allows_value("ba
 
 
 #
-# Example with slurpy
+# Example with Slurpy
 #
 
-use Types::Standard qw( slurpy Map );
+use Types::Standard qw( Slurpy Map );
 
 my $type3 = Dict[
 	foo => Types::Standard::Int,
 	bar => Types::Standard::RegexpRef,
-	slurpy Map[ Types::Standard::Int, Types::Standard::ArrayRef ],
+	()  => Slurpy[ Map[ Types::Standard::Int, Types::Standard::ArrayRef ] ],
 ];
 
 should_pass( { foo => 42, bar => qr// }, $type3 );
@@ -208,7 +214,7 @@ ok( !$type3->my_hashref_allows_value('123', qr//),  '!my_hashref_allows_value("1
 my $type4 = Dict[
 	foo => Types::Standard::Int->where(sub { $_ % 2 == 0 }),
 	bar => Optional[ Types::Standard::RegexpRef ],
-	slurpy Map[ Types::Standard::Int, Types::Standard::ArrayRef ],
+	()  => Slurpy[ Map[ Types::Standard::Int, Types::Standard::ArrayRef ] ],
 ];
 
 should_pass( { foo => 42, bar => qr// }, $type4 );
@@ -292,7 +298,7 @@ is_deeply(
 my $type7 = Dict[
 	foo => $Rounded,
 	bar => Optional[$Rounded],
-	slurpy Types::Standard::HashRef[$Rounded]
+	()  => Slurpy[ Types::Standard::HashRef[$Rounded] ],
 ];
 
 is_deeply(
@@ -319,6 +325,40 @@ is_deeply(
 	'cowardly refuses to drop keys to allow coercion to work',
 );
 
+
+#
+# Deep coercion with CHILD OF slurpy
+#
+
+my $type8 = Dict[
+	foo => $Rounded,
+	bar => Optional[$Rounded],
+	()  => ( Slurpy[ Types::Standard::HashRef[$Rounded] ] )->where( 1 )->where( 1 ),
+];
+
+is_deeply(
+	$type8->coerce({ foo => 4.1 }),
+	{ foo => 4 },
+	'deep coercion',
+);
+
+is_deeply(
+	$type8->coerce({ foo => 4.1, bar => 5.1 }),
+	{ foo => 4, bar => 5 },
+	'can coerce optional slots',
+);
+
+is_deeply(
+	$type8->coerce({ foo => 4.1, quux => 6.1 }),
+	{ foo => 4, quux => 6 },
+	'can coerce slurpy',
+);
+
+is_deeply(
+	$type8->coerce({ foo => 4.1, bar => 'xyz' }),
+	{ foo => 4.1, bar => 'xyz' },
+	'cowardly refuses to drop keys to allow coercion to work',
+);
 
 done_testing;
 

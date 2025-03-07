@@ -12,7 +12,7 @@ Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
 
 =head1 COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2019-2021 by Toby Inkster.
+This software is copyright (c) 2019-2023 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
@@ -37,6 +37,8 @@ ok(Tuple->can_be_inlined, 'Tuple can be inlined');
 is(exception { Tuple->inline_check(q/$xyz/) }, undef, "Inlining Tuple doesn't throw an exception");
 ok(!Tuple->has_coercion, "Tuple doesn't have a coercion");
 ok(Tuple->is_parameterizable, "Tuple is parameterizable");
+isnt(Tuple->type_default, undef, "Tuple has a type_default");
+is_deeply(Tuple->type_default->(), [], "Tuple type_default is []");
 
 #
 # The @tests array is a list of triples:
@@ -97,6 +99,8 @@ my @tests = (
 	fail => 'object overloading arrayref' => do { package Local::OL::Array; use overload q[@{}] => sub { $_[0]{array} }; bless {array=>[]} },
 	fail => 'object overloading hashref' => do { package Local::OL::Hash; use overload q[%{}] => sub { $_[0][0] }; bless [{}] },
 	fail => 'object overloading coderef' => do { package Local::OL::Code; use overload q[&{}] => sub { $_[0][0] }; bless [sub { 1 }] },
+	fail => 'object booling to false'  => do { package Local::OL::BoolFalse; use overload q[bool] => sub { 0 }; bless [] },
+	fail => 'object booling to true'   => do { package Local::OL::BoolTrue;  use overload q[bool] => sub { 1 }; bless [] },
 #TESTS
 );
 
@@ -137,6 +141,7 @@ should_fail( [], $type1 );  # not enough slots (empty arrayref)
 should_fail( 42, $type1 );  # not even an arrayref
 should_fail( bless([42,[1..10],undef], 'Foo'), $type1 ); # blessed
 
+is($type1->type_default, undef, "$type1 has no type_default");
 
 #
 # Some Optional slots.
@@ -178,36 +183,32 @@ should_pass([42,[],{},undef], $type3);   # ... but undef is okay
 
 
 #
-# Simple slurpy example
+# Simple Slurpy example
 #
 
-use Types::Standard qw(slurpy);
+use Types::Standard qw(Slurpy);
 
 my $type4 = Tuple[
 	Types::Standard::RegexpRef,
-	slurpy Types::Standard::ArrayRef[
-		Types::Standard::Int,
-	],
+	Slurpy[ Types::Standard::ArrayRef[ Types::Standard::Int ] ],
 ];
 
 should_pass([qr//], $type4);
 should_pass([qr//,1..4], $type4);
 should_fail([qr//,1..4,qr//], $type4);
-# note that the slurpy slurps stuff into an arrayref to check
+# note that the Slurpy slurps stuff into an arrayref to check
 # so it will fail when there's an actual arrayref there.
 should_fail([qr//,[1..4]], $type4);
 
 
 #
-# Optional + slurpy example
+# Optional + Slurpy example
 #
 
 my $type5 = Tuple[
 	Types::Standard::RegexpRef,
 	Optional[ Types::Standard::HashRef ],
-	slurpy Types::Standard::ArrayRef[
-		Types::Standard::Int,
-	],
+	Slurpy[ Types::Standard::ArrayRef[ Types::Standard::Int ] ],
 ];
 
 should_pass([qr//], $type5);
@@ -223,10 +224,7 @@ should_fail([qr//,1..4], $type5);
 
 my $type6 = Tuple[
 	Types::Standard::RegexpRef,
-	slurpy Types::Standard::Tuple[
-		Types::Standard::Int,
-		Types::Standard::Int,
-	],
+	Slurpy[ Types::Standard::Tuple[ Types::Standard::Int, Types::Standard::Int ] ],
 ];
 
 should_pass([qr//], $type6);
@@ -238,16 +236,13 @@ should_fail([qr//,1,2,3,4,5], $type6);
 
 
 #
-# Optional + slurpy Tuple inside a Tuple
+# Optional + Slurpy Tuple inside a Tuple
 #
 
 my $type7 = Tuple[
 	Types::Standard::RegexpRef,
 	Optional[ Types::Standard::RegexpRef ],
-	slurpy Types::Standard::Tuple[
-		Types::Standard::Int,
-		Types::Standard::Int,
-	],
+	Slurpy[ Types::Standard::Tuple[ Types::Standard::Int, Types::Standard::Int ] ],
 ];
 
 should_pass([qr//], $type7);
@@ -261,14 +256,12 @@ should_fail([qr//,qr//,1,2,3,4,5], $type7);
 
 
 #
-# Simple slurpy hashref example
+# Simple Slurpy hashref example
 #
 
 my $type8 = Tuple[
 	Types::Standard::RegexpRef,
-	slurpy Types::Standard::HashRef[
-		Types::Standard::Int,
-	],
+	Slurpy[ Types::Standard::HashRef[ Types::Standard::Int ] ],
 ];
 
 should_pass([qr//], $type8);
@@ -287,15 +280,13 @@ should_fail([qr//,'foo'], $type8);
 my $type9 = Tuple[
 	Types::Standard::RegexpRef,
 	Optional[ Types::Standard::ScalarRef ],
-	slurpy Types::Standard::HashRef[
-		Types::Standard::Int,
-	],
+	Slurpy[ Types::Standard::HashRef[ Types::Standard::Int ] ],
 ];
 
 should_pass([qr//], $type9);
 should_pass([qr//,\1], $type9);
 should_pass([qr//,\1,foo=>1,bar=>2], $type9);
-# can't omit Optional element but still provide slurpy
+# can't omit Optional element but still provide Slurpy
 should_fail([qr//,foo=>1,bar=>2], $type9);
 
 
@@ -311,7 +302,7 @@ my $type10 = Tuple[
 	$Rounded,
 	Types::Standard::ArrayRef[$Rounded],
 	Optional[$Rounded],
-	slurpy Types::Standard::HashRef[$Rounded],
+	Slurpy[ Types::Standard::HashRef[$Rounded] ],
 ];
 
 my $coerced = $type10->coerce([
@@ -342,11 +333,36 @@ subtest 'coercion happened as expected' => sub {
 my $type11 = Tuple[
 	Types::Standard::Int,
 	Types::Standard::ScalarRef,
-	slurpy Types::Standard::HashRef,
+	Slurpy[ Types::Standard::HashRef ],
 ];
 should_pass([1,\1], $type11);
 should_pass([1,\1,foo=>3], $type11);
 should_fail([1,\1,'foo'], $type11);
+
+
+#
+# Coercion with CHILD OF slurpy
+#
+
+my $type12 = Tuple[
+	$Rounded,
+	Types::Standard::ArrayRef[$Rounded],
+	Optional[$Rounded],
+	( Slurpy[ Types::Standard::HashRef[$Rounded] ] )->create_child_type( coercion => 1 ),
+];
+
+my $coerced2 = $type12->coerce([
+	3.1,
+	[ 1.1, 1.2, 1.3 ],
+	4.2,
+	foo => 5.1, bar => 6.1,
+]);
+subtest 'coercion happened as expected' => sub {
+	is($coerced2->[0], 3);
+	is_deeply($coerced2->[1], [1,1,1]);
+	is($coerced2->[2], 4);
+	is_deeply({@$coerced2[3..6]}, {foo=>5,bar=>6});
+};
 
 done_testing;
 

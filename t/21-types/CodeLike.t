@@ -12,7 +12,7 @@ Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
 
 =head1 COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2019-2021 by Toby Inkster.
+This software is copyright (c) 2019-2023 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
@@ -37,6 +37,8 @@ ok(CodeLike->can_be_inlined, 'CodeLike can be inlined');
 is(exception { CodeLike->inline_check(q/$xyz/) }, undef, "Inlining CodeLike doesn't throw an exception");
 ok(!CodeLike->has_coercion, "CodeLike doesn't have a coercion");
 ok(!CodeLike->is_parameterizable, "CodeLike isn't parameterizable");
+isnt(CodeLike->type_default, undef, "CodeLike has a type_default");
+is(scalar CodeLike->type_default->()->(), undef, "CodeLike type_default is sub {}");
 
 #
 # The @tests array is a list of triples:
@@ -97,6 +99,8 @@ my @tests = (
 	fail => 'object overloading arrayref' => do { package Local::OL::Array; use overload q[@{}] => sub { $_[0]{array} }; bless {array=>[]} },
 	fail => 'object overloading hashref' => do { package Local::OL::Hash; use overload q[%{}] => sub { $_[0][0] }; bless [{}] },
 	pass => 'object overloading coderef' => do { package Local::OL::Code; use overload q[&{}] => sub { $_[0][0] }; bless [sub { 1 }] },
+	fail => 'object booling to false'  => do { package Local::OL::BoolFalse; use overload q[bool] => sub { 0 }; bless [] },
+	fail => 'object booling to true'   => do { package Local::OL::BoolTrue;  use overload q[bool] => sub { 1 }; bless [] },
 #TESTS
 );
 

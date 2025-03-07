@@ -12,7 +12,7 @@ Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
 
 =head1 COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2013-2014, 2017-2021 by Toby Inkster.
+This software is copyright (c) 2013-2014, 2017-2023 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
@@ -54,7 +54,6 @@ sub diag_version
 sub diag_env
 {
 	require B;
-	require Devel::TypeTiny::Perl56Compat;
 	my $var = shift;
 	return diag sprintf('  $%-40s   %s', $var, exists $ENV{$var} ? B::perlstring($ENV{$var}) : "undef");
 }
@@ -120,7 +119,6 @@ __END__
 
 Exporter::Tiny
 Return::Type
-Type::Tie
 Type::Tiny::XS
 
 Scalar::Util/Sub::Util

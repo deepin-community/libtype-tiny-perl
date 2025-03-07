@@ -12,7 +12,7 @@ Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
 
 =head1 COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2019-2021 by Toby Inkster.
+This software is copyright (c) 2019-2023 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
@@ -30,7 +30,7 @@ use Test::Requires { 'Test::Warnings' => 0.005 };
 use Test::Warnings ':all';
 
 #
-# This is a regexp containing embeeded Perl code.
+# This is a regexp containing embedded Perl code.
 # It's interesting because it cannot easily be inlined.
 #
 

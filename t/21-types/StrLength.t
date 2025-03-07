@@ -12,7 +12,7 @@ Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
 
 =head1 COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2019-2021 by Toby Inkster.
+This software is copyright (c) 2019-2023 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
@@ -37,6 +37,8 @@ ok(StrLength->can_be_inlined, 'StrLength can be inlined');
 is(exception { StrLength->inline_check(q/$xyz/) }, undef, "Inlining StrLength doesn't throw an exception");
 ok(!StrLength->has_coercion, "StrLength doesn't have a coercion");
 ok(StrLength->is_parameterizable, "StrLength is parameterizable");
+isnt(StrLength->type_default, undef, "StrLength has a type_default");
+is(StrLength->type_default->(), '', "StrLength type_default is the empty string");
 
 #
 # The @tests array is a list of triples:
@@ -97,6 +99,8 @@ my @tests = (
 	fail => 'object overloading arrayref' => do { package Local::OL::Array; use overload q[@{}] => sub { $_[0]{array} }; bless {array=>[]} },
 	fail => 'object overloading hashref' => do { package Local::OL::Hash; use overload q[%{}] => sub { $_[0][0] }; bless [{}] },
 	fail => 'object overloading coderef' => do { package Local::OL::Code; use overload q[&{}] => sub { $_[0][0] }; bless [sub { 1 }] },
+	fail => 'object booling to false'  => do { package Local::OL::BoolFalse; use overload q[bool] => sub { 0 }; bless [] },
+	fail => 'object booling to true'   => do { package Local::OL::BoolTrue;  use overload q[bool] => sub { 1 }; bless [] },
 #TESTS
 );
 
@@ -132,6 +136,8 @@ should_pass('123456',    $StrLength_2);
 should_pass('1234567',   $StrLength_2);
 should_pass('12345678',  $StrLength_2);
 should_pass('123456789', $StrLength_2);
+
+is($StrLength_2->type_default, undef, "$StrLength_2 has no type_default");
 
 # Cyrillic Small Letter Zhe - two bytes as UTF-8 but only one character
 should_fail("\x{0436}" x 1, $StrLength_2);

@@ -12,7 +12,7 @@ Build-Depends-Indep:
  libdevel-hide-perl <!nocheck>,
  libdevel-lexalias-perl <!nocheck>,
  libdevel-stacktrace-perl <!nocheck>,
- libexporter-tiny-perl (>= 1.000000),
+ libexporter-tiny-perl (>= 1.006000),
  libfunction-parameters-perl <!nocheck>,
  libio-string-perl <!nocheck>,
  libmatch-simple-perl <!nocheck>,
@@ -29,13 +29,11 @@ Build-Depends-Indep:
  libtest-memory-cycle-perl <!nocheck>,
  libtest-requires-perl <!nocheck>,
  libtest-warnings-perl <!nocheck>,
- libtype-tie-perl <!nocheck>,
- libtype-tiny-xs-perl (>= 0.016),
+ libtype-tiny-xs-perl (>= 0.025),
  libtypes-path-tiny-perl <!nocheck>,
  libspecio-perl <!nocheck>,
  libvalidation-class-perl,
- perl,
-Standards-Version: 4.6.0
+Standards-Version: 4.6.2
 Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/libtype-tiny-perl
 Vcs-Git: https://salsa.debian.org/perl-team/modules/packages/libtype-tiny-perl.git
 Homepage: https://typetiny.toby.ink/
@@ -44,15 +42,22 @@ Rules-Requires-Root: no
 Package: libtype-tiny-perl
 Architecture: all
 Depends:
- libexporter-tiny-perl (>= 1.000000),
+ libexporter-tiny-perl (>= 1.006000),
  ${misc:Depends},
  ${perl:Depends},
 Recommends:
+ libclass-xsaccessor-perl,
  libref-util-perl,
- libtype-tiny-xs-perl (>= 0.016),
+ libtype-tiny-xs-perl (>= 0.025),
 Suggests:
  libdevel-lexalias-perl,
  libdevel-stacktrace-perl,
+Breaks:
+ libtype-tie-perl (<< 2),
+ libtypes-xsd-lite-perl (<< 0.007),
+ libtypes-xsd-perl (<< 0.008),
+Replaces:
+ libtype-tie-perl (<< 2),
 Enhances:
  libdata-validator-perl,
  libfunction-parameters-perl,
@@ -62,12 +67,13 @@ Enhances:
  libparams-validationcompiler-perl,
  libregexp-util-perl,
  libreply-perl,
- libtype-tie-perl,
  perl,
 Description: tiny, yet Moo(se)-compatible type constraint
- Type::Tiny is a tiny class for creating Moose-like type constraint
- objects which are compatible with Moo, Moose and Mouse.
+ Type::Tiny is a tiny class
+ for creating Moose-like type constraint objects
+ which are compatible with Moo, Moose and Mouse.
  .
- This package also includes Types::Standard, a Moose-inspired library
- of useful type constraints, and Type::Params, to allow very fast checking
- and coercion of function and method parameters.
+ This package also includes Types::Standard,
+ a Moose-inspired library of useful type constraints,
+ and Type::Params, to allow very fast checking and coercion
+ of function and method parameters.

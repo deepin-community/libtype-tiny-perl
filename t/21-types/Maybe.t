@@ -12,7 +12,7 @@ Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
 
 =head1 COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2019-2021 by Toby Inkster.
+This software is copyright (c) 2019-2023 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
@@ -37,6 +37,8 @@ ok(Maybe->can_be_inlined, 'Maybe can be inlined');
 is(exception { Maybe->inline_check(q/$xyz/) }, undef, "Inlining Maybe doesn't throw an exception");
 ok(!Maybe->has_coercion, "Maybe doesn't have a coercion");
 ok(Maybe->is_parameterizable, "Maybe is parameterizable");
+isnt(Maybe->type_default, undef, "Maybe has a type_default");
+is(Maybe->type_default->(), undef, "Maybe type_default is undef");
 
 #
 # The @tests array is a list of triples:
@@ -97,6 +99,8 @@ my @tests = (
 	pass => 'object overloading arrayref' => do { package Local::OL::Array; use overload q[@{}] => sub { $_[0]{array} }; bless {array=>[]} },
 	pass => 'object overloading hashref' => do { package Local::OL::Hash; use overload q[%{}] => sub { $_[0][0] }; bless [{}] },
 	pass => 'object overloading coderef' => do { package Local::OL::Code; use overload q[&{}] => sub { $_[0][0] }; bless [sub { 1 }] },
+	pass => 'object booling to false'  => do { package Local::OL::BoolFalse; use overload q[bool] => sub { 0 }; bless [] },
+	pass => 'object booling to true'   => do { package Local::OL::BoolTrue;  use overload q[bool] => sub { 1 }; bless [] },
 #TESTS
 );
 
@@ -125,6 +129,13 @@ should_pass(0, $type);
 should_pass(1, $type);
 should_fail(1.1, $type);
 should_pass(undef, $type);
+
+isnt($type->type_default, undef, "$type has a type_default, because Int does");
+is($type->type_default->(), 0, "$type type_default is 0");
+
+my $type2 = Maybe[ Types::Standard::Defined ];
+isnt($type2->type_default, undef, "$type2 has a type_default, even though Defined doesn't");
+is($type2->type_default->(), undef, "$type2 type_default is undef");
 
 done_testing;
 

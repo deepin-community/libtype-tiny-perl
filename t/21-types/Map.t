@@ -12,7 +12,7 @@ Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
 
 =head1 COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2019-2021 by Toby Inkster.
+This software is copyright (c) 2019-2023 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
@@ -37,6 +37,8 @@ ok(Map->can_be_inlined, 'Map can be inlined');
 is(exception { Map->inline_check(q/$xyz/) }, undef, "Inlining Map doesn't throw an exception");
 ok(!Map->has_coercion, "Map doesn't have a coercion");
 ok(Map->is_parameterizable, "Map is parameterizable");
+isnt(Map->type_default, undef, "Map has a type_default");
+is_deeply(Map->type_default->(), {}, "Map type_default is {}");
 
 #
 # The @tests array is a list of triples:
@@ -97,6 +99,8 @@ my @tests = (
 	fail => 'object overloading arrayref' => do { package Local::OL::Array; use overload q[@{}] => sub { $_[0]{array} }; bless {array=>[]} },
 	fail => 'object overloading hashref' => do { package Local::OL::Hash; use overload q[%{}] => sub { $_[0][0] }; bless [{}] },
 	fail => 'object overloading coderef' => do { package Local::OL::Code; use overload q[&{}] => sub { $_[0][0] }; bless [sub { 1 }] },
+	fail => 'object booling to false'  => do { package Local::OL::BoolFalse; use overload q[bool] => sub { 0 }; bless [] },
+	fail => 'object booling to true'   => do { package Local::OL::BoolTrue;  use overload q[bool] => sub { 1 }; bless [] },
 #TESTS
 );
 
@@ -130,6 +134,8 @@ ok($MapWithIntKeys->can_be_inlined, '$MapWithIntKeys can be inlined');
 is(exception { $MapWithIntKeys->inline_check(q/$xyz/) }, undef, "Inlining \$MapWithIntKeys doesn't throw an exception");
 ok(!$MapWithIntKeys->has_coercion, "\$MapWithIntKeys doesn't have a coercion");
 ok(!$MapWithIntKeys->is_parameterizable, "\$MapWithIntKeys is not parameterizable");
+isnt($MapWithIntKeys->type_default, undef, "\$MapWithIntKeys has a type_default");
+is_deeply($MapWithIntKeys->type_default->(), {}, "\$MapWithIntKeys type_default is {}");
 ok_subtype(Types::Standard::HashRef, $MapWithIntKeys);
 
 should_fail( 1,               $MapWithIntKeys );

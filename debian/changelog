@@ -1,3 +1,121 @@
+libtype-tiny-perl (2.004000-1) unstable; urgency=medium
+
+  * Team upload.
+  * Import upstream version 2.004000.
+
+ -- Étienne Mollier <emollier@debian.org>  Fri, 21 Jul 2023 19:39:01 +0200
+
+libtype-tiny-perl (2.002001-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Jonas Smedegaard ]
+  * stop build-depend explicitly on perl, unused directly
+
+ -- Jonas Smedegaard <dr@jones.dk>  Wed, 01 Feb 2023 12:18:23 +0100
+
+libtype-tiny-perl (2.002000-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Jonas Smedegaard ]
+  * declare compliance with Debian Policy 4.6.2
+  * tighten (build-)dependencies
+    on libexporter-tiny-perl libtype-tiny-xs-perl
+  * update copyright info: update coverage
+
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 02 Jan 2023 12:51:03 +0100
+
+libtype-tiny-perl (2.000001-2) unstable; urgency=medium
+
+  * Team upload.
+  * Add Breaks on older versions of libtypes-xsd{,-lite}-perl in an
+    attempt to untangle the migration issues of the 3 packages found by
+    autopkgtests on ci.debian.net.
+  * Update Bug-* information in debian/upstream/metadata following the
+    upstream metadata.
+
+ -- gregor herrmann <gregoa@debian.org>  Thu, 13 Oct 2022 18:17:39 +0200
+
+libtype-tiny-perl (2.000001-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sat, 01 Oct 2022 10:25:05 +0200
+
+libtype-tiny-perl (2.000000-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release(s)
+
+  [ Jonas Smedegaard ]
+  * tighten (build-)dependency on libexporter-tiny-perl;
+    break and enhance (not build-depend on nor enhance) libtype-tie-perl,
+    now included here;
+    recommend libclass-xsaccessor-perl
+  * drop patch now applied
+  * update copyright info: update coverage
+
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 27 Sep 2022 19:12:05 +0200
+
+libtype-tiny-perl (1.016010-1) unstable; urgency=medium
+
+  * Team upload
+
+  [ upstream ]
+  * new release
+
+  [ Florian Schlichting ]
+  * Add spelling.patch
+
+ -- Florian Schlichting <fsfs@debian.org>  Wed, 21 Sep 2022 22:09:41 +0200
+
+libtype-tiny-perl (1.016008-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 19 Aug 2022 08:26:06 +0200
+
+libtype-tiny-perl (1.016007-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Jonas Smedegaard ]
+  * use semantic newlines
+    in long descriptions and copyright file License grants,
+    and generally normalize copyright file whitespace
+  * update copyright info:
+    + use field Reference (not License-Reference)
+  * update git-buildpackage config:
+    + use DEP-14 git branches
+    + enable automatic DEP-14 branch name handling
+    + add usage config
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 14 Aug 2022 08:41:13 +0200
+
+libtype-tiny-perl (1.016006-1) unstable; urgency=medium
+
+  * Team upload.
+  * Import upstream version 1.016006.
+  * Update years of upstream copyright and third-party attributions.
+  * Declare compliance with Debian Policy 4.6.1.
+  * Add empty debian/tests/pkg-perl/syntax-skip to enable all of
+    autopkgtest's syntax.t.
+
+ -- gregor herrmann <gregoa@debian.org>  Wed, 27 Jul 2022 18:03:29 +0200
+
+libtype-tiny-perl (1.012004-2) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * Remove constraints unnecessary since buster
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Thu, 30 Jun 2022 10:04:46 +0100
+
 libtype-tiny-perl (1.012004-1) unstable; urgency=medium
 
   [ upstream ]
